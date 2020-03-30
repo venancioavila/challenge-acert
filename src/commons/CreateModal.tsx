@@ -6,7 +6,8 @@ import {
   CardActions,
   Button,
   CardContent,
-  TextField
+  TextField,
+  Fade
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -70,43 +71,45 @@ const CreateModal = () => {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
       >
-        <Typography component="div" className={classes.root}>
-          <Card className={classes.card}>
-            <Typography color="textSecondary" gutterBottom>
-              Nova conta
-            </Typography>
-            <CardContent className={classes.cardContent}>
-              <div className={classes.form}>
-                <TextField
-                  className={classes.input}
-                  id="filled-basic"
-                  label="Name..."
-                  variant="filled"
-                />
-                <TextField
-                  className={classes.input}
-                  id="filled-basic"
-                  label="Email..."
-                  variant="filled"
-                  type="email"
-                />
-                <TextField
-                  className={classes.input}
-                  id="filled-basic"
-                  label="Senha..."
-                  variant="filled"
-                  type="password"
-                />
-              </div>
-            </CardContent>
-            <CardActions className={classes.actions}>
-              <Button onClick={() => handleOpen()}>Cancelar</Button>
-              <Button variant="outlined" color="primary">
-                Criar
-              </Button>
-            </CardActions>
-          </Card>
-        </Typography>
+        <Fade in={open}>
+          <Typography component="div" className={classes.root}>
+            <Card className={classes.card}>
+              <Typography color="textSecondary" gutterBottom>
+                Nova conta
+              </Typography>
+              <CardContent className={classes.cardContent}>
+                <div className={classes.form}>
+                  <TextField
+                    className={classes.input}
+                    id="filled-basic"
+                    label="Name..."
+                    variant="filled"
+                  />
+                  <TextField
+                    className={classes.input}
+                    id="filled-basic"
+                    label="Email..."
+                    variant="filled"
+                    type="email"
+                  />
+                  <TextField
+                    className={classes.input}
+                    id="filled-basic"
+                    label="Senha..."
+                    variant="filled"
+                    type="password"
+                  />
+                </div>
+              </CardContent>
+              <CardActions className={classes.actions}>
+                <Button onClick={() => handleOpen()}>Cancelar</Button>
+                <Button variant="outlined" color="primary">
+                  Criar
+                </Button>
+              </CardActions>
+            </Card>
+          </Typography>
+        </Fade>
       </Modal>
     </>
   );
