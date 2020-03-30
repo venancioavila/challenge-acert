@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Typography,
@@ -10,6 +10,8 @@ import {
   Fade
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../store/actions";
 
 const useStyles = makeStyles({
   root: {
@@ -53,12 +55,34 @@ const useStyles = makeStyles({
 });
 
 const CreateModal = () => {
+  const users: any[] = useSelector((state: any) => state.storage.users);
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleOpen = () => {
     setOpen(!open);
+  };
+
+  const handleSave = () => {
+    const exist = users.find(user => user.email === email);
+    if (exist) {
+      setError("Esse usuários já está cadastrado.");
+      return;
+    }
+    setError("");
+    dispatch(
+      actions.registerUserRequest({
+        name,
+        email,
+        password
+      })
+    );
   };
 
   return (
@@ -84,6 +108,7 @@ const CreateModal = () => {
                     id="filled-basic"
                     label="Name..."
                     variant="filled"
+                    onChange={(e: any) => setName(e.target.value)}
                   />
                   <TextField
                     className={classes.input}
@@ -91,6 +116,7 @@ const CreateModal = () => {
                     label="Email..."
                     variant="filled"
                     type="email"
+                    onChange={(e: any) => setEmail(e.target.value)}
                   />
                   <TextField
                     className={classes.input}
@@ -98,12 +124,23 @@ const CreateModal = () => {
                     label="Senha..."
                     variant="filled"
                     type="password"
+                    onChange={(e: any) => setPassword(e.target.value)}
                   />
                 </div>
               </CardContent>
+              {error && (
+                <Typography color="error" gutterBottom>
+                  {error}
+                </Typography>
+              )}
+
               <CardActions className={classes.actions}>
                 <Button onClick={() => handleOpen()}>Cancelar</Button>
-                <Button variant="outlined" color="primary">
+                <Button
+                  onClick={() => handleSave()}
+                  variant="outlined"
+                  color="primary"
+                >
                   Criar
                 </Button>
               </CardActions>
