@@ -20,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 import { History } from "history";
 import api from "../services/api";
-import ArtistList from "../commons/ArtistList";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,7 +90,7 @@ interface Props {
   history: History;
 }
 
-const Home = ({ history }: Props) => {
+const ArtistList = ({ history }: Props) => {
   const user = useSelector((state: any) => state.storage.loggedUser);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -146,7 +145,6 @@ const Home = ({ history }: Props) => {
                 <Search />
               </IconButton>
             </Paper>
-            {/* <ArtistList /> */}
           </CardContent>
           <CardActions className={classes.actions}></CardActions>
         </Card>
@@ -155,4 +153,4 @@ const Home = ({ history }: Props) => {
   );
 };
 
-export default Home;
+export default ArtistList;
