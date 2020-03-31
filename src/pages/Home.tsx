@@ -6,7 +6,8 @@ import {
   Button,
   CardContent,
   AppBar,
-  Toolbar
+  Toolbar,
+  LinearProgress
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +16,7 @@ import { History } from "history";
 import { api } from "../services/api";
 import ArtistList from "../commons/ArtistList";
 import SearchBar from "../commons/Search";
+import moment from "moment";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "flex-start",
       justifyContent: "center",
-      paddingTop: 50
+      paddingTop: 100,
+      paddingBottom: 50
     },
     card: {
       width: "90%",
@@ -91,6 +94,7 @@ const Home = ({ history }: Props) => {
   const classes = useStyles();
   const [artist, setArtist] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogout = () => {
     dispatch(actions.logoutRequest());
@@ -104,13 +108,23 @@ const Home = ({ history }: Props) => {
   }, [user]);
 
   const handleSearch = async () => {
+    setLoading(true);
     const res = await api("artist", search);
     setArtist(res.results.artistmatches.artist);
+    dispatch(
+      actions.addSearch({
+        email: user.email,
+        search,
+        createdAt: moment().format("DD/MM/YYYY, h:mm:ss a")
+      })
+    );
+    setLoading(false);
   };
 
   return (
     <>
-      <AppBar color="default" position="static">
+      <AppBar color="default" position="fixed">
+        {loading && <LinearProgress />}
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6">{user && user.name}</Typography>
           <Button onClick={() => handleLogout()} color="inherit">

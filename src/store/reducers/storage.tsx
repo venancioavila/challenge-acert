@@ -11,7 +11,8 @@ if (data) {
 const INITIAL_STATE = {
   newUser: null,
   loggedUser: currentUser,
-  users: []
+  users: [],
+  searchs: []
 };
 
 export default function counter(state = INITIAL_STATE, action: any) {
@@ -20,6 +21,11 @@ export default function counter(state = INITIAL_STATE, action: any) {
       return { ...state, users: [...state.users, action.payload] };
     case types.LOGIN_SUCCESS:
       return { ...state, loggedUser: action.payload };
+    case types.ADD_SEARCH:
+      return {
+        ...state,
+        searchs: [...state.searchs, action.payload]
+      };
     default:
       return state;
   }

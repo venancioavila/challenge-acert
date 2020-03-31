@@ -23,3 +23,7 @@ export const registerUserRequest = (data: any) => {
 export const registerUserSuccess = (data: any) => {
   return { type: types.REGISTER_USER_SUCCESS, payload: data };
 };
+
+export const addSearch = (data: any) => {
+  return { type: types.ADD_SEARCH, payload: data };
+};

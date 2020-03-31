@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   GridListTile,
   Button,
@@ -16,6 +16,9 @@ import { History } from "history";
 import ListItem from "./ListItem";
 import { getAlbums } from "../services/api";
 import SearchBar from "./Search";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../store/actions";
+import moment from "moment";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,6 +63,10 @@ interface Props {
 }
 
 const ArtistList = ({ history, data }: Props) => {
+  const user = useSelector((state: any) => state.storage.loggedUser);
+  const searchs = useSelector((state: any) => state.storage.searchs);
+  const dispatch = useDispatch();
+
   const [dialog, setDialog] = useState(false);
   const [albums, setAlbums] = useState<any[]>([]);
   const [artist, setArtist] = useState("");
@@ -77,6 +84,13 @@ const ArtistList = ({ history, data }: Props) => {
   };
 
   const handleSearch = () => {
+    dispatch(
+      actions.addSearch({
+        email: user.email,
+        search,
+        createdAt: moment().format("DD/MM/YYYY, h:mm:ss a")
+      })
+    );
     if (search === "") {
       setAlbums(albumbackup);
       return;
@@ -90,6 +104,10 @@ const ArtistList = ({ history, data }: Props) => {
     }
     setAlbums(album);
   };
+
+  useEffect(() => {
+    console.log(searchs);
+  }, [searchs]);
 
   return (
     <>
