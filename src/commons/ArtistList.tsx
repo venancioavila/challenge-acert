@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   GridListTile,
   Button,
@@ -8,13 +8,10 @@ import {
   DialogContent,
   IconButton,
   DialogTitle,
-  ListSubheader,
   GridListTileBar
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Info } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import * as actions from "../store/actions";
 import { History } from "history";
 import ListItem from "./ListItem";
 import { getAlbums } from "../services/api";
@@ -73,7 +70,6 @@ const ArtistList = ({ history, data }: Props) => {
     setArtist(artist);
     const res: any = await getAlbums(artist);
     const { topalbums: album } = res;
-    console.log(album.album);
     setAlbums(album.album);
   };
 

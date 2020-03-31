@@ -5,17 +5,10 @@ import {
   CardActions,
   Button,
   CardContent,
-  TextField,
   AppBar,
-  Toolbar,
-  IconButton,
-  Paper,
-  InputBase,
-  Divider
+  Toolbar
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Menu, Search, Directions } from "@material-ui/icons";
-import CreateModal from "../commons/CreateModal";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 import { History } from "history";
@@ -112,7 +105,6 @@ const Home = ({ history }: Props) => {
 
   const handleSearch = async () => {
     const res = await api("artist", search);
-    console.log(res.results.artistmatches.artist);
     setArtist(res.results.artistmatches.artist);
   };
 

@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Typography,
   Card,
-  GridListTile,
-  Button,
-  GridList,
-  DialogActions,
-  Dialog,
-  DialogContent,
   IconButton,
   Paper,
-  DialogTitle,
   Tooltip,
-  CardMedia,
-  ListSubheader,
-  GridListTileBar
+  CardMedia
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Album, Info } from "@material-ui/icons";
+import { Album } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
