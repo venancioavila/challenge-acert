@@ -63,6 +63,8 @@ const ArtistList = ({ history, data }: Props) => {
   const [dialog, setDialog] = useState(false);
   const [albums, setAlbums] = useState<any[]>([]);
   const [artist, setArtist] = useState("");
+  const [search, setSearch] = useState("");
+  const [albumbackup, setAlbumbackup] = useState<any[]>([]);
   const classes = useStyles();
   const handleDialog = () => setDialog(!dialog);
 
@@ -71,6 +73,22 @@ const ArtistList = ({ history, data }: Props) => {
     const res: any = await getAlbums(artist);
     const { topalbums: album } = res;
     setAlbums(album.album);
+    setAlbumbackup(album.album);
+  };
+
+  const handleSearch = () => {
+    if (search === "") {
+      setAlbums(albumbackup);
+      return;
+    }
+    const album: any[] = albums.filter(item => {
+      if (item.name.toLowerCase().includes(search)) return item;
+    });
+
+    if (album.length < 1) {
+      setAlbums([]);
+    }
+    setAlbums(album);
   };
 
   return (
@@ -97,13 +115,13 @@ const ArtistList = ({ history, data }: Props) => {
             <div className={classes.gridTitle}>
               <SearchBar
                 title="Pesquise por álbuns"
-                setSearch={null}
-                handleSearch={null}
+                setSearch={setSearch}
+                handleSearch={() => handleSearch()}
               />
             </div>
             <GridList cellHeight={180} className={classes.gridList}>
               {albums.map(item => (
-                <GridListTile>
+                <GridListTile key={item.name}>
                   <img src={item.image[3]["#text"]} alt="" />
                   <GridListTileBar
                     title={item.name}
