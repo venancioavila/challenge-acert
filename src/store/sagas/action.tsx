@@ -1,6 +1,6 @@
 import { put } from "redux-saga/effects";
 import bcrypt from "bcryptjs";
-import { registerUserSuccess, loginSuccess } from "../actions";
+import { registerUserSuccess, loginSuccess, logoutSuccess } from "../actions";
 
 export function* registerUser(action: any) {
   const { name, email, password } = action.payload;
@@ -16,5 +16,11 @@ export function* registerUser(action: any) {
 }
 
 export function* login(action: any) {
-  yield put(loginSuccess(action.payloa));
+  localStorage.setItem("session", JSON.stringify(action.payload));
+  yield put(loginSuccess(action.payload));
+}
+
+export function* logout(action: any) {
+  localStorage.clear();
+  yield put(logoutSuccess(null));
 }

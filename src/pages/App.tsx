@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Typography,
   Card,
@@ -9,6 +9,10 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CreateModal from "../commons/CreateModal";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../store/actions";
+import bcrypt from "bcryptjs";
+import { History } from "history";
 
 const useStyles = makeStyles({
   root: {
@@ -51,7 +55,35 @@ const useStyles = makeStyles({
   }
 });
 
-const App = () => {
+interface Props {
+  history: History;
+}
+
+const App = ({ history }: Props) => {
+  const users: any[] = useSelector((state: any) => state.storage.users);
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const handleLogin = () => {
+    const user = users.find(user => user.email === email);
+    if (!user) {
+      setError("Esse usuário não existe.");
+      return;
+    }
+    setError("");
+    const match = bcrypt.compareSync(password, user.password);
+    if (!match) {
+      setPasswordError("Senha incorreta.");
+      return;
+    }
+    setPasswordError("");
+    dispatch(actions.loginRequest(user));
+    history.push("/home");
+  };
+
   const classes = useStyles();
   return (
     <Typography component="div" className={classes.root}>
@@ -66,6 +98,8 @@ const App = () => {
               id="filled-basic"
               label="Email..."
               variant="filled"
+              type="email"
+              onChange={(e: any) => setEmail(e.target.value)}
             />
             <TextField
               className={classes.input}
@@ -73,13 +107,28 @@ const App = () => {
               label="Senha..."
               variant="filled"
               type="password"
+              onChange={(e: any) => setPassword(e.target.value)}
             />
           </div>
         </CardContent>
+        {error && (
+          <Typography color="error" gutterBottom>
+            {error}
+          </Typography>
+        )}
+        {passwordError && (
+          <Typography color="error" gutterBottom>
+            {passwordError}
+          </Typography>
+        )}
         <CardActions className={classes.actions}>
           <CreateModal />
-          <Button variant="outlined" color="primary">
-            Login
+          <Button
+            onClick={() => handleLogin()}
+            variant="outlined"
+            color="primary"
+          >
+            Entrar agora
           </Button>
         </CardActions>
       </Card>

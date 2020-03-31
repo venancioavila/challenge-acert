@@ -83,6 +83,7 @@ const CreateModal = () => {
         password
       })
     );
+    handleOpen();
   };
 
   return (
@@ -133,7 +134,6 @@ const CreateModal = () => {
                   {error}
                 </Typography>
               )}
-
               <CardActions className={classes.actions}>
                 <Button onClick={() => handleOpen()}>Cancelar</Button>
                 <Button
