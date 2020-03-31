@@ -52,7 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      alignSelf: "center"
+      alignSelf: "center",
+      marginTop: 50
     }
   })
 );
@@ -96,7 +97,7 @@ const ArtistList = ({ history, data }: Props) => {
       return;
     }
     const album: any[] = albums.filter(item => {
-      if (item.name.toLowerCase().includes(search)) return item;
+      if (item.name.toLowerCase().includes(search.toLowerCase())) return item;
     });
 
     if (album.length < 1) {
