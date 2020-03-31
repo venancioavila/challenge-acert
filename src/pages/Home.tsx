@@ -19,8 +19,9 @@ import CreateModal from "../commons/CreateModal";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 import { History } from "history";
-import api from "../services/api";
+import { api } from "../services/api";
 import ArtistList from "../commons/ArtistList";
+import SearchBar from "../commons/Search";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -111,12 +112,13 @@ const Home = ({ history }: Props) => {
 
   const handleSearch = async () => {
     const res = await api("artist", search);
+    console.log(res.results.artistmatches.artist);
     setArtist(res.results.artistmatches.artist);
   };
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar color="default" position="static">
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6">{user && user.name}</Typography>
           <Button onClick={() => handleLogout()} color="inherit">
@@ -130,23 +132,12 @@ const Home = ({ history }: Props) => {
             Músicas
           </Typography>
           <CardContent className={classes.cardContent}>
-            <Paper component="div" className={classes.rootPaper}>
-              <InputBase
-                className={classes.inputSearch}
-                placeholder="Pesquise por artistas"
-                inputProps={{ "aria-label": "search google maps" }}
-                onChange={(e: any) => setSearch(e.target.value)}
-              />
-              <Divider className={classes.divider} orientation="vertical" />
-              <IconButton
-                onClick={() => handleSearch()}
-                className={classes.iconButton}
-                aria-label="search"
-              >
-                <Search />
-              </IconButton>
-            </Paper>
-            {/* <ArtistList /> */}
+            <SearchBar
+              title="Pesquisa por Artistas"
+              setSearch={setSearch}
+              handleSearch={handleSearch}
+            />
+            <ArtistList data={artist} history={history} />
           </CardContent>
           <CardActions className={classes.actions}></CardActions>
         </Card>

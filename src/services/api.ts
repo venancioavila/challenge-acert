@@ -1,8 +1,13 @@
-const api = async (method: string, search: string) => {
+export const api = async (method: string, search: string) => {
   const res = await fetch(
     `http://ws.audioscrobbler.com/2.0/?method=${method}.search&artist=${search}&api_key=71a2102883fca54f9e0909aa328a330d&format=json`
   );
   return await res.json();
 };
 
-export default api;
+export const getAlbums = async (album: string) => {
+  const res = await fetch(
+    `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${album}&api_key=71a2102883fca54f9e0909aa328a330d&format=json`
+  );
+  return await res.json();
+};
