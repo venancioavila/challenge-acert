@@ -156,7 +156,7 @@ const Home = ({ history }: Props) => {
               setSearch={setSearch}
               handleSearch={handleSearch}
             />
-            <ArtistList data={artist} history={history} />
+            <ArtistList data={artist} />
           </CardContent>
           <CardActions className={classes.actions}></CardActions>
         </Card>

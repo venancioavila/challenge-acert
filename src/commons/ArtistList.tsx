@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Info } from "@material-ui/icons";
-import { History } from "history";
 import ListItem from "./ListItem";
 import { getAlbums } from "../services/api";
 import SearchBar from "./Search";
@@ -95,9 +94,9 @@ const ArtistList = ({ data }: Props) => {
       setAlbums(albumbackup);
       return;
     }
+    // eslint-disable-next-line
     const album: any[] = albums.filter(item => {
       if (item.name.toLowerCase().includes(search.toLowerCase())) return item;
-      return true;
     });
 
     if (album.length < 1) {
