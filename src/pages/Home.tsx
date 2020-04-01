@@ -7,9 +7,12 @@ import {
   CardContent,
   AppBar,
   Toolbar,
-  LinearProgress
+  LinearProgress,
+  IconButton
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { ExitToApp } from "@material-ui/icons";
+import HistoryIcon from "@material-ui/icons/History";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 import { History } from "history";
@@ -17,6 +20,7 @@ import { api } from "../services/api";
 import ArtistList from "../commons/ArtistList";
 import SearchBar from "../commons/Search";
 import moment from "moment";
+import HistoryDialog from "../commons/History";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -95,6 +99,7 @@ const Home = ({ history }: Props) => {
   const [artist, setArtist] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
+  const [historySearch, setHistorySearch] = useState(false);
 
   const handleLogout = () => {
     dispatch(actions.logoutRequest());
@@ -114,6 +119,7 @@ const Home = ({ history }: Props) => {
     dispatch(
       actions.addSearch({
         email: user.email,
+        type: "artist",
         search,
         createdAt: moment().format("DD/MM/YYYY, h:mm:ss a")
       })
@@ -121,15 +127,22 @@ const Home = ({ history }: Props) => {
     setLoading(false);
   };
 
+  const handleDialog = () => setHistorySearch(!historySearch);
+
   return (
     <>
       <AppBar color="default" position="fixed">
         {loading && <LinearProgress />}
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6">{user && user.name}</Typography>
-          <Button onClick={() => handleLogout()} color="inherit">
-            Sair
-          </Button>
+          <div>
+            <IconButton onClick={() => handleDialog()} color="inherit">
+              <HistoryIcon />
+            </IconButton>
+            <IconButton onClick={() => handleLogout()} color="inherit">
+              <ExitToApp />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       <Typography component="div" className={classes.root}>
@@ -148,6 +161,7 @@ const Home = ({ history }: Props) => {
           <CardActions className={classes.actions}></CardActions>
         </Card>
       </Typography>
+      <HistoryDialog open={historySearch} handleDialog={handleDialog} />
     </>
   );
 };

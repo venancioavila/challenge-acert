@@ -88,6 +88,7 @@ const ArtistList = ({ history, data }: Props) => {
     dispatch(
       actions.addSearch({
         email: user.email,
+        type: "album",
         search,
         createdAt: moment().format("DD/MM/YYYY, h:mm:ss a")
       })
