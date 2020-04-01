@@ -129,7 +129,7 @@ const ListItem = ({ data, handleDialog, handleAlbums }: Props) => {
           </div>
         </div>
         <div className={classes.albums}>
-          <Tooltip title="Albuns">
+          <Tooltip title="Álbuns">
             <IconButton
               onClick={() => {
                 handleAlbums(data.name);

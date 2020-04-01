@@ -72,7 +72,7 @@ const History = ({ open, handleDialog }: Props) => {
               <CloseIcon />
             </IconButton>
             <Typography variant="body1" className={classes.title}>
-              Historico
+              Histórico
             </Typography>
           </Toolbar>
         </AppBar>
