@@ -88,8 +88,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   data: any;
-  handleDialog: any;
-  handleAlbums: any;
+  handleDialog: (e: void) => any;
+  handleAlbums: (e: string) => Promise<void>;
 }
 
 const ListItem = ({ data, handleDialog, handleAlbums }: Props) => {

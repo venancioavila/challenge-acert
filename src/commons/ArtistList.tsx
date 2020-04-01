@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   GridListTile,
   Button,
@@ -63,9 +63,8 @@ interface Props {
   data: any[];
 }
 
-const ArtistList = ({ history, data }: Props) => {
+const ArtistList = ({ data }: Props) => {
   const user = useSelector((state: any) => state.storage.loggedUser);
-  const searchs = useSelector((state: any) => state.storage.searchs);
   const dispatch = useDispatch();
 
   const [dialog, setDialog] = useState(false);
@@ -99,6 +98,7 @@ const ArtistList = ({ history, data }: Props) => {
     }
     const album: any[] = albums.filter(item => {
       if (item.name.toLowerCase().includes(search.toLowerCase())) return item;
+      return true;
     });
 
     if (album.length < 1) {
@@ -106,10 +106,6 @@ const ArtistList = ({ history, data }: Props) => {
     }
     setAlbums(album);
   };
-
-  useEffect(() => {
-    console.log(searchs);
-  }, [searchs]);
 
   return (
     <>

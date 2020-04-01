@@ -71,8 +71,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  setSearch: any;
-  handleSearch: any;
+  setSearch: (e: any) => any;
+  handleSearch: (e: any) => any;
   title: string;
 }
 
