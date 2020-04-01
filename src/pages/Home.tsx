@@ -119,7 +119,7 @@ const Home = ({ history }: Props) => {
     dispatch(
       actions.addSearch({
         email: user.email,
-        type: "artist",
+        type: "Artista",
         search,
         createdAt: moment().format("DD/MM/YYYY, h:mm:ss a")
       })
