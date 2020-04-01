@@ -109,6 +109,7 @@ const Home = ({ history }: Props) => {
     if (!user) {
       history.push("/");
     }
+    // eslint-disable-next-line
   }, [user]);
 
   const handleSearch = async () => {

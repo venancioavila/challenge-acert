@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
@@ -12,7 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
-import { useSelector } from "react-redux";
+
+export default { title: "Dialogs" };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,32 +35,27 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-interface Props {
-  open: boolean;
-  handleDialog: (e: any) => any;
-}
-
-const History = ({ open, handleDialog }: Props) => {
-  const [userSearchs, setUserSearchs] = useState<any[]>([]);
-  const user = useSelector((state: any) => state.storage.loggedUser);
-  const searchs = useSelector((state: any) => state.storage.searchs);
-
+export function FullScreenDialog() {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
-  useEffect(() => {
-    const currentSearchs = searchs.filter(
-      (item: any) => item.email === user.email
-    );
-    setUserSearchs(currentSearchs);
-    // eslint-disable-next-line
-  }, [searchs]);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        Open full-screen dialog
+      </Button>
       <Dialog
         fullScreen
         open={open}
-        onClose={handleDialog}
+        onClose={handleClose}
         TransitionComponent={Transition}
       >
         <AppBar className={classes.appBar}>
@@ -66,32 +63,32 @@ const History = ({ open, handleDialog }: Props) => {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={handleDialog}
+              onClick={handleClose}
               aria-label="close"
             >
               <CloseIcon />
             </IconButton>
-            <Typography variant="body1" className={classes.title}>
-              Historico
+            <Typography variant="h6" className={classes.title}>
+              Sound
             </Typography>
+            <Button autoFocus color="inherit" onClick={handleClose}>
+              save
+            </Button>
           </Toolbar>
         </AppBar>
         <List>
-          {userSearchs.map(item => (
-            <>
-              <ListItem button>
-                <ListItemText
-                  primary={`${item.search} - ${item.type}`}
-                  secondary={item.createdAt}
-                />
-              </ListItem>
-              <Divider />
-            </>
-          ))}
+          <ListItem button>
+            <ListItemText primary="Phone ringtone" secondary="Titania" />
+          </ListItem>
+          <Divider />
+          <ListItem button>
+            <ListItemText
+              primary="Default notification ringtone"
+              secondary="Tethys"
+            />
+          </ListItem>
         </List>
       </Dialog>
     </div>
   );
-};
-
-export default History;
+}
