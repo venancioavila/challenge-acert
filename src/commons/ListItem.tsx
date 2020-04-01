@@ -104,6 +104,7 @@ const ListItem = ({ data, handleDialog, handleAlbums }: Props) => {
               className={classes.cover}
               image={data.image[2]["#text"]}
               title="Live from space album cover"
+              src="image"
             />
           </Card>
           <div className={classes.labels}>
@@ -112,6 +113,7 @@ const ListItem = ({ data, handleDialog, handleAlbums }: Props) => {
               variant="subtitle2"
               gutterBottom
               component="span"
+              data-testid="artistNames"
             >
               {data.name}
             </Typography>
@@ -120,6 +122,7 @@ const ListItem = ({ data, handleDialog, handleAlbums }: Props) => {
               variant="caption"
               gutterBottom
               component="span"
+              data-testid="listeners"
             >
               {data.listeners} ouvintes
             </Typography>

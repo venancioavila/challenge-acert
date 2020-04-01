@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  history: History;
   data: any[];
 }
 
